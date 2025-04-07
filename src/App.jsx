@@ -1,17 +1,19 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { pickupLines } from './data/pickupLines';
+import { pickupLines, situations, styles } from './data/pickupLines';
 import LocationSelect from './components/LocationSelect';
 import StyleFilter from './components/StyleFilter';
 import SituationSelect from './components/SituationSelect';
 import PickupLine from './components/PickupLine';
-import { FaRandom } from 'react-icons/fa';
+import GenerateOptions from './components/GenerateOptions';
+import { generatePickupLine } from './services/openai';
 
 function App() {
   const [selectedLocation, setSelectedLocation] = useState('');
   const [selectedStyle, setSelectedStyle] = useState('');
   const [selectedSituation, setSelectedSituation] = useState('');
   const [currentLine, setCurrentLine] = useState('');
+  const [isLoading, setIsLoading] = useState(false);
 
   const locations = Object.keys(pickupLines);
 
@@ -20,6 +22,25 @@ function App() {
       const lines = pickupLines[selectedLocation].situations[selectedSituation][selectedStyle];
       const randomIndex = Math.floor(Math.random() * lines.length);
       setCurrentLine(lines[randomIndex]);
+    }
+  };
+
+  const handleGenerateAI = async () => {
+    if (selectedLocation && selectedStyle && selectedSituation) {
+      setIsLoading(true);
+      try {
+        const generatedLine = await generatePickupLine(
+          selectedLocation,
+          situations[selectedLocation][selectedSituation],
+          styles[selectedStyle]
+        );
+        setCurrentLine(generatedLine);
+      } catch (error) {
+        console.error('Error generating AI pickup line:', error);
+        setCurrentLine("Sorry, I couldn't generate a line right now. Try the preset ones!");
+      } finally {
+        setIsLoading(false);
+      }
     }
   };
 
@@ -98,13 +119,11 @@ function App() {
             animate={{ scale: 1, opacity: 1 }}
             className="text-center mb-8"
           >
-            <button
-              onClick={getRandomLine}
-              className="bg-purple-600 text-white px-8 py-3 rounded-full hover:bg-purple-700 transition-colors flex items-center justify-center mx-auto space-x-2 shadow-lg"
-            >
-              <FaRandom className="mr-2" />
-              <span>Generate Pick-up Line</span>
-            </button>
+            <GenerateOptions
+              onGenerate={getRandomLine}
+              onGenerateAI={handleGenerateAI}
+              isLoading={isLoading}
+            />
           </motion.div>
         )}
 
