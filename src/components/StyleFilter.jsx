@@ -1,11 +1,12 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import { styles } from '../data/pickupLines';
+import { colors } from '../theme/colors';
 
 const StyleFilter = ({ selectedStyle, onStyleSelect }) => {
   return (
     <div className="mb-6">
-      <h3 className="text-lg text-purple-700 mb-3">Choose your style:</h3>
+      <h3 className={`text-lg ${colors.text.secondary} mb-3`}>Choose your style:</h3>
       <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-3">
         {Object.entries(styles).map(([style, description]) => (
           <motion.button
@@ -15,8 +16,8 @@ const StyleFilter = ({ selectedStyle, onStyleSelect }) => {
             onClick={() => onStyleSelect(style)}
             className={`p-3 rounded-lg text-sm transition-all ${
               selectedStyle === style
-                ? 'bg-purple-600 text-white shadow-lg'
-                : 'bg-white/80 text-purple-600 hover:bg-purple-50'
+                ? `${colors.button.primary} text-white shadow-lg`
+                : `${colors.button.outline}`
             }`}
           >
             <div className="font-medium capitalize">{style}</div>

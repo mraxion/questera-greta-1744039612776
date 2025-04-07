@@ -1,6 +1,7 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import { FaBook, FaBus, FaGlassCheers, FaCoffee, FaDumbbell } from 'react-icons/fa';
+import { colors } from '../theme/colors';
 
 const locationIcons = {
   library: FaBook,
@@ -19,7 +20,9 @@ const LocationCard = ({ location, isSelected, onClick, situationsCount }) => {
       whileTap={{ scale: 0.98 }}
       onClick={onClick}
       className={`cursor-pointer rounded-xl p-4 ${
-        isSelected ? 'bg-purple-600 text-white' : 'bg-white hover:bg-purple-50'
+        isSelected
+          ? `${colors.button.primary} text-white`
+          : `${colors.background.card} ${colors.background.cardHover}`
       } shadow-lg transition-all`}
     >
       <div className="flex items-center justify-between mb-2">
