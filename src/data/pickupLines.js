@@ -15,7 +15,11 @@ export const situations = {
     askingForHelp: "Asking for help finding a book",
     usingComputer: "Using library computers",
     inQuietZone: "In the quiet study zone",
-    atLibraryCafe: "At the library café"
+    atLibraryCafe: "At the library café",
+    readingNewspaper: "Reading newspapers/magazines",
+    nearFictionSection: "Near the fiction section",
+    atStudyGroup: "At a study group",
+    printingDocuments: "At the printing station"
   },
   busStop: {
     missingBus: "Just missed the bus",
@@ -25,7 +29,11 @@ export const situations = {
     lastBusOfDay: "Last bus of the day",
     sharingUmbrella: "Sharing an umbrella",
     checkingSchedule: "Checking bus schedule together",
-    crowdedStop: "At a crowded stop"
+    crowdedStop: "At a crowded stop",
+    earlyMorning: "Early morning wait",
+    lateNightBus: "Late night last bus",
+    sittingTogether: "Sitting at the bench",
+    touristAsking: "Tourist asking for directions"
   },
   nightclub: {
     atBar: "At the bar",
@@ -35,7 +43,11 @@ export const situations = {
     waitingInLine: "Waiting in line",
     requestingSong: "Requesting a song",
     nearPhotoWall: "By the photo wall",
-    outsideVenue: "Outside getting fresh air"
+    outsideVenue: "Outside getting fresh air",
+    karaokeMoment: "During karaoke",
+    birthdayParty: "At a birthday celebration",
+    liveBandPlaying: "During live music",
+    meetingAtCoatCheck: "At the coat check"
   },
   cafe: {
     orderingDrinks: "Ordering drinks",
@@ -45,7 +57,11 @@ export const situations = {
     inLine: "Waiting in line",
     outdoorSeating: "At outdoor seating",
     weekendBrunch: "Weekend brunch",
-    barista: "Talking to barista"
+    barista: "Talking to barista",
+    openMicNight: "During open mic night",
+    morningCoffeeRush: "Morning coffee rush",
+    afternoonTea: "Afternoon tea time",
+    lastOrderTime: "Near closing time"
   },
   gym: {
     treadmill: "On treadmills",
@@ -55,7 +71,11 @@ export const situations = {
     stretchArea: "In stretch area",
     checkingIn: "At check-in desk",
     groupClass: "During group class",
-    leavingGym: "Leaving the gym"
+    leavingGym: "Leaving the gym",
+    proteinBar: "At the protein shake bar",
+    personalTraining: "Near personal trainers",
+    swimmingPool: "By the pool",
+    saunaArea: "In the sauna area"
   }
 };
 
@@ -90,6 +110,36 @@ export const pickupLines = {
         ]
       }
     }
+  },
+  busStop: {
+    situations: {
+      missingBus: {
+        funny: [
+          "Well, the bus left, but at least it left us with an opportunity.",
+          "Missing the bus never felt so lucky.",
+          "Is this the bus to destiny? Because timing seems perfect."
+        ],
+        smooth: [
+          "Some delays are worth the wait.",
+          "Maybe the schedule had other plans for us.",
+          "The next bus can wait if you'd like to chat."
+        ],
+        nerdy: [
+          "According to probability theory, missing the same bus increases our chances of connection.",
+          "Is this what they call a quantum entanglement of schedules?",
+          "The statistical probability of this moment is fascinating."
+        ],
+        cheesy: [
+          "Are you a bus schedule? Because you've got me waiting with anticipation.",
+          "Missing the bus was worth it just to meet you.",
+          "Is your name Destiny? Because this feels like a scheduled encounter."
+        ],
+        sincere: [
+          "Sometimes missed connections lead to better ones. Would you like to chat while we wait?",
+          "I believe everything happens for a reason. Maybe missing this bus was meant to be.",
+          "Since we're both waiting, would you like some company?"
+        ]
+      }
+    }
   }
-  // Add more locations with their situations and styles
 };

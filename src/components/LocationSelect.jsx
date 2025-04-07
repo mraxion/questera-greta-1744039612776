@@ -1,23 +1,18 @@
 import React from 'react';
-import { motion } from 'framer-motion';
+import { situations } from '../data/pickupLines';
+import LocationCard from './LocationCard';
 
 const LocationSelect = ({ locations, selectedLocation, onLocationSelect }) => {
   return (
-    <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 p-4">
+    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
       {locations.map((location) => (
-        <motion.button
+        <LocationCard
           key={location}
-          whileHover={{ scale: 1.05 }}
-          whileTap={{ scale: 0.95 }}
+          location={location}
+          isSelected={selectedLocation === location}
           onClick={() => onLocationSelect(location)}
-          className={`p-4 rounded-lg text-center transition-colors ${
-            selectedLocation === location
-              ? 'bg-purple-600 text-white'
-              : 'bg-white text-purple-600 hover:bg-purple-50'
-          } shadow-md`}
-        >
-          {location.charAt(0).toUpperCase() + location.slice(1)}
-        </motion.button>
+          situationsCount={Object.keys(situations[location]).length}
+        />
       ))}
     </div>
   );

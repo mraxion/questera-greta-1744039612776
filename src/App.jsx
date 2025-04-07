@@ -6,6 +6,7 @@ import StyleFilter from './components/StyleFilter';
 import SituationSelect from './components/SituationSelect';
 import PickupLine from './components/PickupLine';
 import GenerateOptions from './components/GenerateOptions';
+import SearchBar from './components/SearchBar';
 import { generatePickupLine } from './services/openai';
 
 function App() {
@@ -57,6 +58,7 @@ function App() {
 
   const handleSituationSelect = (situation) => {
     setSelectedSituation(situation);
+    setSelectedStyle('');
     setCurrentLine('');
   };
 
@@ -64,7 +66,7 @@ function App() {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-purple-100 to-pink-100 py-8 px-4">
-      <div className="max-w-4xl mx-auto">
+      <div className="max-w-6xl mx-auto">
         <motion.h1
           initial={{ y: -20, opacity: 0 }}
           animate={{ y: 0, opacity: 1 }}
@@ -73,63 +75,66 @@ function App() {
           Pick-up Line Generator
         </motion.h1>
 
-        <motion.div
-          initial={{ y: 20, opacity: 0 }}
-          animate={{ y: 0, opacity: 1 }}
-          className="bg-white/80 backdrop-blur-sm rounded-xl p-6 shadow-xl mb-8"
-        >
-          <h2 className="text-xl text-purple-700 mb-4">Choose your location:</h2>
-          <LocationSelect
-            locations={locations}
-            selectedLocation={selectedLocation}
-            onLocationSelect={handleLocationSelect}
-          />
-          
-          {selectedLocation && (
-            <>
-              <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                className="mt-6"
-              >
+        <SearchBar
+          onLocationSelect={handleLocationSelect}
+          onSituationSelect={handleSituationSelect}
+        />
+
+        <div className="grid gap-8">
+          <motion.div
+            initial={{ y: 20, opacity: 0 }}
+            animate={{ y: 0, opacity: 1 }}
+            className="bg-white/80 backdrop-blur-sm rounded-xl p-6 shadow-xl"
+          >
+            <h2 className="text-xl text-purple-700 mb-4 font-semibold">Choose your location:</h2>
+            <LocationSelect
+              locations={locations}
+              selectedLocation={selectedLocation}
+              onLocationSelect={handleLocationSelect}
+            />
+            
+            {selectedLocation && (
+              <AnimatePresence mode="wait">
                 <SituationSelect
                   location={selectedLocation}
                   selectedSituation={selectedSituation}
                   onSituationSelect={handleSituationSelect}
                 />
-              </motion.div>
-
-              <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                className="mt-6"
-              >
-                <StyleFilter
-                  selectedStyle={selectedStyle}
-                  onStyleSelect={handleStyleSelect}
-                />
-              </motion.div>
-            </>
-          )}
-        </motion.div>
-
-        {canGenerate && (
-          <motion.div
-            initial={{ scale: 0.9, opacity: 0 }}
-            animate={{ scale: 1, opacity: 1 }}
-            className="text-center mb-8"
-          >
-            <GenerateOptions
-              onGenerate={getRandomLine}
-              onGenerateAI={handleGenerateAI}
-              isLoading={isLoading}
-            />
+              </AnimatePresence>
+            )}
           </motion.div>
-        )}
 
-        <AnimatePresence mode="wait">
-          {currentLine && <PickupLine key={currentLine} line={currentLine} />}
-        </AnimatePresence>
+          {selectedSituation && (
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              className="bg-white/80 backdrop-blur-sm rounded-xl p-6 shadow-xl"
+            >
+              <StyleFilter
+                selectedStyle={selectedStyle}
+                onStyleSelect={handleStyleSelect}
+              />
+            </motion.div>
+          )}
+
+          {canGenerate && (
+            <motion.div
+              initial={{ scale: 0.9, opacity: 0 }}
+              animate={{ scale: 1, opacity: 1 }}
+              className="text-center"
+            >
+              <GenerateOptions
+                onGenerate={getRandomLine}
+                onGenerateAI={handleGenerateAI}
+                isLoading={isLoading}
+              />
+            </motion.div>
+          )}
+
+          <AnimatePresence mode="wait">
+            {currentLine && <PickupLine key={currentLine} line={currentLine} />}
+          </AnimatePresence>
+        </div>
       </div>
     </div>
   );
