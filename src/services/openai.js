@@ -1,12 +1,21 @@
 import OpenAI from 'openai';
 
-const openai = new OpenAI({
-  apiKey: import.meta.env.VITE_OPENAI_API_KEY,
-  dangerouslyAllowBrowser: true
-});
+const getOpenAIInstance = () => {
+  const apiKey = localStorage.getItem('openai_api_key');
+  if (!apiKey) {
+    throw new Error('OpenAI API key not found. Please set your API key in settings.');
+  }
+  
+  return new OpenAI({
+    apiKey: apiKey,
+    dangerouslyAllowBrowser: true
+  });
+};
 
 export const generatePickupLine = async (location, situation, style) => {
   try {
+    const openai = getOpenAIInstance();
+    
     const response = await openai.chat.completions.create({
       model: "gpt-3.5-turbo",
       messages: [
@@ -25,6 +34,9 @@ export const generatePickupLine = async (location, situation, style) => {
 
     return response.choices[0].message.content.trim();
   } catch (error) {
+    if (error.message.includes('API key')) {
+      throw new Error('Please set your OpenAI API key in settings to generate AI pickup lines.');
+    }
     console.error('Error generating pickup line:', error);
     throw error;
   }
