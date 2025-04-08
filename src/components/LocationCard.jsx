@@ -1,18 +1,22 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-import { FaBook, FaBus, FaGlassCheers, FaCoffee, FaDumbbell } from 'react-icons/fa';
+import { FaBook, FaBus, FaGlassCheers, FaCoffee, FaDumbbell, FaUmbrellaBeach, FaTree, FaBookOpen, FaLandmark } from 'react-icons/fa';
 import { colors } from '../theme/colors';
 
 const locationIcons = {
-  library: FaBook,
-  busStop: FaBus,
-  nightclub: FaGlassCheers,
-  cafe: FaCoffee,
-  gym: FaDumbbell
+  FaBook,
+  FaBus,
+  FaGlassCheers,
+  FaCoffee,
+  FaDumbbell,
+  FaUmbrellaBeach,
+  FaTree,
+  FaBookOpen,
+  FaLandmark
 };
 
-const LocationCard = ({ location, isSelected, onClick, situationsCount }) => {
-  const Icon = locationIcons[location] || FaBook;
+const LocationCard = ({ location, isSelected, onClick, situationsCount, description, icon }) => {
+  const Icon = locationIcons[icon] || FaBook;
 
   return (
     <motion.div
@@ -34,6 +38,7 @@ const LocationCard = ({ location, isSelected, onClick, situationsCount }) => {
       <h3 className="text-lg font-semibold capitalize mb-1">
         {location.replace(/([A-Z])/g, ' $1').trim()}
       </h3>
+      <p className="text-sm opacity-80">{description}</p>
     </motion.div>
   );
 };
